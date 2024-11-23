@@ -11,13 +11,12 @@ import * as Yup from "yup";
 const MultiStepForm = () => {
   const { formData, currentStep, updateData, setCurrentStep } = useForm();
   const [isAnimating, setIsAnimating] = useState(false);
-  const [errors, setErrors] = useState<string[]>([])
+  const [errors, setErrors] = useState<boolean>(false);
 
   // Validation function based on current step
   const validateStep = async (step: number) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const schemas: Record<number, Yup.ObjectSchema<any>> = {
-
       1: step1ValidationSchema,
       2: step2ValidationSchema,
       3: step3ValidationSchema,
@@ -35,10 +34,17 @@ const MultiStepForm = () => {
     } catch (err: unknown) {
       // Type guard to check if 'err' is a Yup ValidationError
       if (err instanceof Yup.ValidationError) {
+        setErrors(true);
+        setTimeout(() => {
+          setErrors(false);
+        }, 3000);
         return err.errors;
       } else {
         // Handle unexpected errors
-        console.error("Unexpected error:", err);
+        setErrors(true);
+        setTimeout(() => {
+          setErrors(false);
+        }, 3000);
         throw err; // rethrow or handle as needed
       }
     }
@@ -47,7 +53,7 @@ const MultiStepForm = () => {
   // Next button handler with validation
   const handleNext = async () => {
     const errors = await validateStep(currentStep);
-    
+
     if (errors === true) {
       // Proceed if validation is successful
       setIsAnimating(true);
@@ -58,7 +64,6 @@ const MultiStepForm = () => {
     } else {
       // Show validation errors on the UI
       // alert(errors.join("\n"));
-      setErrors(errors);
       // Optionally, display the errors next to the relevant fields.
     }
   };
@@ -104,7 +109,11 @@ const MultiStepForm = () => {
             </div>
           </div>
         </div>
-        {errors && <h1 className="bg-red-500 px-2 py-1 rounded-lg text-white text-center">Please fill all the required fields correctly before submitting</h1>}
+        {errors && (
+          <h1 className="bg-red-500 px-2 py-1 rounded-lg text-white text-center">
+            Please fill all the required fields correctly before submitting
+          </h1>
+        )}
 
         <form onSubmit={handleSubmit}>
           {/* Step 1 */}
