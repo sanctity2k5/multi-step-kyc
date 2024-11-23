@@ -15,7 +15,9 @@ const MultiStepForm = () => {
 
   // Validation function based on current step
   const validateStep = async (step: number) => {
-    const schemas: Record<number, Yup.ObjectSchema> = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const schemas: Record<number, Yup.ObjectSchema<any>> = {
+
       1: step1ValidationSchema,
       2: step2ValidationSchema,
       3: step3ValidationSchema,
