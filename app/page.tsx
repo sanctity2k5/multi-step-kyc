@@ -11,7 +11,7 @@ import * as Yup from "yup";
 const MultiStepForm = () => {
   const { formData, currentStep, updateData, setCurrentStep } = useForm();
   const [isAnimating, setIsAnimating] = useState(false);
-  const [errors, setErrors] = useState<string[]>([]);
+  const [errors, setErrors] = useState<string[]>([])
 
   // Validation function based on current step
   const validateStep = async (step: number) => {
