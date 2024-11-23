@@ -18,7 +18,7 @@ This project is a responsive, multi-step form built with **Next.js**. It provide
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-repo/multi-step-form.git
+   git clone https://github.com/sanctity2k5/multi-step-kyc.git
    cd multi-step-form
 
    ```
